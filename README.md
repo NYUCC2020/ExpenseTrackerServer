@@ -1,10 +1,10 @@
-## Back End
-mongoDB (https://www.mongodb.com/cloud/atlas)
-
-account: chen873374255@gmail.com
-password: NYUcc2020
+## Expense Tracker APP
 
 ```
+ mongoDB Access (https://www.mongodb.com/cloud/atlas)
+ account: chen873374255@gmail.com
+ password: NYUcc2020
+
  npm install
  cd client npm install
  cd ..
