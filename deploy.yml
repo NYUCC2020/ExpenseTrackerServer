@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: expense-tracker
+  labels:
+    app: expense-tracker
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30001
+      name: expense-tracker
+  selector:
+    app: expense-tracker
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expense-tracker
+  labels:
+    app: expense-tracker
+spec:
+  selector:
+    matchLabels:
+      app: expense-tracker
+  template:
+    metadata:
+      labels:
+        app: expense-tracker
+    spec:
+      containers:
+      - name: expense-tracker
+        image: iamnwi/expense-tracker:latest
+        ports:
+        - containerPort: 3000
+          name: expense-tracker
