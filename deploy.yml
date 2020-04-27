@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: expense-tracker
-        image: iamnwi/expense-tracker:latest
+        image: us.icr.io/nyu-cc/expense-tracker:latest
         ports:
         - containerPort: 3000
           name: expense-tracker
