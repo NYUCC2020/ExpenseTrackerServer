@@ -4,22 +4,30 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const jwt = require('./config/jwt');
 
 dotenv.config({ path: './config/config.env' });
 
 connectDB();
 
 const transactions = require('./routes/transactions');
+const users = require('./users/user.controller');
 
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+app.use(jwt());
 
 if(process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
 app.use('/api/v1/transactions', transactions);
+app.use('/api/v1/users', users);
 
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
