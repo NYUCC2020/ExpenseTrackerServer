@@ -12,6 +12,7 @@ dotenv.config({ path: './config/config.env' });
 
 connectDB();
 
+const devices = require('./routes/devices');
 const transactions = require('./routes/transactions');
 const users = require('./users/user.controller');
 
@@ -26,6 +27,7 @@ if(process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+app.use('/api/v1/users/:userId/devices', devices);
 app.use('/api/v1/users/:userId/transactions', transactions);
 app.use('/api/v1/users', users);
 
