@@ -8,7 +8,7 @@ router
   .post(addTransaction);
 
 router
-  .route('/:id')
+  .route('/:transactionId')
   .delete(deleteTransaction);
 
 module.exports = router;

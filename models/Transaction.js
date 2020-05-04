@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const TransactionSchema = new mongoose.Schema({
   text: {
@@ -13,6 +14,10 @@ const TransactionSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 
