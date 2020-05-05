@@ -14,7 +14,7 @@ function App() {
             // clear alert on location change
             dispatch(alertActions.clear());
         });
-    }, []);
+    }, [dispatch]);
 
     return (
         <div className="jumbotron">
@@ -38,24 +38,3 @@ function App() {
 }
 
 export default App;
-// import { GlobalProvider } from './context/GlobalState';
-
-// import './App.css';
-
-
-
-// function App() {
-//   return (
-//     <GlobalProvider>
-//       <Header />
-//       <div className="container">
-//         <Balance />
-//         <IncomeExpenses />
-//         <TransactionList />
-//         <AddTransaction />
-//       </div>
-//     </GlobalProvider>
-//   );
-// }
-
-// export default App;

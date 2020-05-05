@@ -1,96 +1,73 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { userActions } from '../context/_actions';
 
-class RegisterPage extends React.Component {
-    constructor(props) {
-        super(props);
+function RegisterPage() {
+    const [user, setUser] = useState({
+        username: '',
+        password: '',
+        walletAddress: ''
+    });
+    const [submitted, setSubmitted] = useState(false);
+    const registering = useSelector(state => state.registration.registering);
+    const dispatch = useDispatch();
 
-        this.state = {
-            user: {
-                username: '',
-                password: '',
-                walletAddress: ''
-            },
-            submitted: false
-        };
+    // reset login status
+    useEffect(() => {
+        dispatch(userActions.logout());
+    }, [dispatch]);
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setUser(user => ({ ...user, [name]: value }));
     }
 
-    handleChange(event) {
-        const { name, value } = event.target;
-        const { user } = this.state;
-        this.setState({
-            user: {
-                ...user,
-                [name]: value
-            }
-        });
-    }
+    function handleSubmit(e) {
+        e.preventDefault();
 
-    handleSubmit(event) {
-        event.preventDefault();
-
-        this.setState({ submitted: true });
-        const { user } = this.state;
-        if (user.walletAddress && user.username && user.password) {
-            this.props.register(user);
+        setSubmitted(true);
+        if (user.username && user.password && user.walletAddress) {
+            dispatch(userActions.register(user));
         }
     }
 
-    render() {
-        const { registering  } = this.props;
-        const { user, submitted } = this.state;
-        return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Register</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !user.username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={user.username} onChange={this.handleChange} />
-                        {submitted && !user.username &&
-                            <div className="help-block">Username is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !user.walletAddress ? ' has-error' : '')}>
-                        <label htmlFor="walletAddress">Wallet Address</label>
-                        <input type="text" className="form-control" name="walletAddress" value={user.walletAddress} onChange={this.handleChange} />
-                        {submitted && !user.walletAddress &&
-                            <div className="help-block">Wallet address is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={user.password} onChange={this.handleChange} />
-                        {submitted && !user.password &&
-                            <div className="help-block">Password is required</div>
-                        }
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary">Register</button>
-                        {registering && 
-                            <img alt="b" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                        }
-                        <Link to="/login" className="btn btn-link">Cancel</Link>
-                    </div>
-                </form>
-            </div>
-        );
-    }
+    return (
+        <div className="col-lg-8 offset-lg-2">
+            <h2>Register</h2>
+            <form name="form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" value={user.username} onChange={handleChange} className={'form-control' + (submitted && !user.username ? ' is-invalid' : '')} />
+                    {submitted && !user.username &&
+                        <div className="invalid-feedback">Username is required</div>
+                    }
+                </div>
+                <div className="form-group">
+                    <label>Wallet Address</label>
+                    <input type="text" name="walletAddress" value={user.walletAddress} onChange={handleChange} className={'form-control' + (submitted && !user.walletAddress ? ' is-invalid' : '')} />
+                    {submitted && !user.walletAddress &&
+                        <div className="invalid-feedback">Wallet Address is required</div>
+                    }
+                </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" value={user.password} onChange={handleChange} className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')} />
+                    {submitted && !user.password &&
+                        <div className="invalid-feedback">Password is required</div>
+                    }
+                </div>
+                <div className="form-group">
+                    <button className="btn btn-primary">
+                        {registering && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        Register
+                    </button>
+                    <Link to="/login" className="btn btn-link">Cancel</Link>
+                </div>
+            </form>
+        </div>
+    );
 }
 
-function mapState(state) {
-    const { registering } = state.registration;
-    return { registering };
-}
-
-const actionCreators = {
-    register: userActions.register
-}
-
-const connectedRegisterPage = connect(mapState, actionCreators)(RegisterPage);
-export { connectedRegisterPage as RegisterPage };
+export { RegisterPage };
