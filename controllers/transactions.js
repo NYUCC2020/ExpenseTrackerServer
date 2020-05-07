@@ -1,11 +1,12 @@
 const Transaction = require('../models/Transaction');
 
 // @desc    Get all transactions
-// @route   GET /api/v1/transactions
+// @route   GET /api/v1/users/:userId/transactions
 // @access  Public
 exports.getTransactions = async (req, res, next) => {
   try {
-    const transactions = await Transaction.find();
+    const userId = req.user.sub;
+    const transactions = await Transaction.find({userId});
 
     return res.status(200).json({
       success: true,
@@ -21,13 +22,12 @@ exports.getTransactions = async (req, res, next) => {
 }
 
 // @desc    Add transaction
-// @route   POST /api/v1/transactions
+// @route   POST /api/v1/users/:userId/transactions
 // @access  Public
 exports.addTransaction = async (req, res, next) => {
   try {
-    const { text, amount } = req.body;
-
-    const transaction = await Transaction.create(req.body);
+    const userId = req.user.sub;
+    const transaction = await Transaction.create({...req.body, userId});
   
     return res.status(201).json({
       success: true,
@@ -51,11 +51,11 @@ exports.addTransaction = async (req, res, next) => {
 }
 
 // @desc    Delete transaction
-// @route   DELETE /api/v1/transactions/:id
+// @route   DELETE /api/v1/users/:userId/transactions/:transactionId
 // @access  Public
 exports.deleteTransaction = async (req, res, next) => {
   try {
-    const transaction = await Transaction.findById(req.params.id);
+    const transaction = await Transaction.findById(req.params.transactionId);
 
     if(!transaction) {
       return res.status(404).json({

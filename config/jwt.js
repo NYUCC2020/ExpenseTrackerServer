@@ -10,7 +10,6 @@ function jwt() {
             // public routes that don't require authentication
             '/api/v1/users/authenticate',
             '/api/v1/users/register',
-            '/api/v1/transactions'
         ]
     });
 }

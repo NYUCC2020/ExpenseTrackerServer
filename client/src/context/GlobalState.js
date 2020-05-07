@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import AppReducer from './AppReducer';
 import axios from 'axios';
+import { authHeader } from './_helpers';
 
 // Initial state
 const initialState = {
@@ -17,9 +18,14 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   // Actions
-  async function getTransactions() {
+  async function getTransactions(userId) {
+    const requestOptions = {
+      method: 'GET',
+      headers: authHeader()
+    };
+
     try {
-      const res = await axios.get('/api/v1/transactions');
+      const res = await axios.get(`/api/v1/users/${userId}/transactions`, requestOptions);
 
       dispatch({
         type: 'GET_TRANSACTIONS',
@@ -33,13 +39,18 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  async function deleteTransaction(id) {
+  async function deleteTransaction(userId, transactionId) {
+    const requestOptions = {
+      method: 'GET',
+      headers: authHeader()
+    };
+
     try {
-      await axios.delete(`/api/v1/transactions/${id}`);
+      await axios.delete(`/api/v1/users/${userId}/transactions/${transactionId}`, requestOptions);
 
       dispatch({
         type: 'DELETE_TRANSACTION',
-        payload: id
+        payload: transactionId
       });
     } catch (err) {
       dispatch({
@@ -49,15 +60,17 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  async function addTransaction(transaction) {
-    const config = {
+  async function addTransaction(userId, transaction) {
+    const requestOptions = {
+      method: 'GET',
       headers: {
+        ...authHeader(),
         'Content-Type': 'application/json'
       }
-    }
+    };
 
     try {
-      const res = await axios.post('/api/v1/transactions', transaction, config);
+      const res = await axios.post(`/api/v1/users/${userId}/transactions`, transaction, requestOptions);
 
       dispatch({
         type: 'ADD_TRANSACTION',
