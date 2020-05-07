@@ -17,7 +17,7 @@ const DeviceSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "ON"
+    default: "OFF"
   },
   statusUpdateTime: {
     type: Number,
