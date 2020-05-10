@@ -3,7 +3,7 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { history } from './context/_helpers';
 import { alertActions } from './context/_actions';
-import { HomePage, PrivateRoute, LoginPage, RegisterPage } from './components'
+import { DevicePage, HomePage, PrivateRoute, LoginPage, RegisterPage } from './components'
 
 function App() {
     const alert = useSelector(state => state.alert);
@@ -17,21 +17,20 @@ function App() {
     }, [dispatch]);
 
     return (
-        <div className="jumbotron">
-            <div className="container">
-                <div className="col-md-8 offset-md-2">
-                    {alert.message &&
-                        <div className={`alert ${alert.type}`}>{alert.message}</div>
-                    }
-                    <Router history={history}>
-                        <Switch>
-                            <PrivateRoute exact path="/" component={HomePage} />
-                            <Route path="/login" component={LoginPage} />
-                            <Route path="/register" component={RegisterPage} />
-                            <Redirect from="*" to="/" />
-                        </Switch>
-                    </Router>
-                </div>
+        <div className="container">
+            <div className="col-md-8 offset-md-2">
+                {alert.message &&
+                    <div className={`alert ${alert.type}`}>{alert.message}</div>
+                }
+                <Router history={history}>
+                    <Switch>
+                        <PrivateRoute exact path="/" component={HomePage} />
+                        <Route path="/login" component={LoginPage} />
+                        <Route path="/register" component={RegisterPage} />
+                        <Route path="/devices" component={DevicePage} />
+                        <Redirect from="*" to="/" />
+                    </Switch>
+                </Router>
             </div>
         </div>
     );

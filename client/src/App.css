@@ -8,20 +8,21 @@
   box-sizing: border-box;
 }
 
+html,
 body {
-  background-color: #f7f7f7;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  margin: 0;
-  font-family: 'Lato', sans-serif;
+  height: 100%;
 }
 
-.container {
-  margin: 30px auto;
-  width: 350px;
+body {
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
 }
 
 h1 {
@@ -87,24 +88,6 @@ input[type='number'] {
   width: 100%;
 }
 
-.btn {
-  cursor: pointer;
-  background-color: #9c88ff;
-  box-shadow: var(--box-shadow);
-  color: #fff;
-  border: 0;
-  display: block;
-  font-size: 16px;
-  margin: 10px 0 30px;
-  padding: 10px;
-  width: 100%;
-}
-
-.btn:focus,
-.delete-btn:focus {
-  outline: 0;
-}
-
 .list {
   list-style-type: none;
   padding: 0;
@@ -120,6 +103,7 @@ input[type='number'] {
   position: relative;
   padding: 10px;
   margin: 10px 0;
+  word-break: break-all;
 }
 
 .list li.plus {
@@ -148,4 +132,9 @@ input[type='number'] {
 
 .list li:hover .delete-btn {
   opacity: 1;
+}
+
+.table .table-cell-btn {
+  padding-left: 1em;
+  padding-right: 1em;
 }

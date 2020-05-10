@@ -6,6 +6,7 @@ import { authHeader } from './_helpers';
 // Initial state
 const initialState = {
   transactions: [],
+  devices: [],
   error: null,
   loading: true
 }
@@ -84,13 +85,83 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  async function getDevices(userId) {
+    const requestOptions = {
+      method: 'GET',
+      headers: authHeader()
+    };
+
+    try {
+      const res = await axios.get(`/api/v1/users/${userId}/devices`, requestOptions);
+
+      dispatch({
+        type: 'GET_DEVICES',
+        payload: res.data.data
+      });
+    } catch (err) {
+      dispatch({
+        type: 'DEVICE_ERROR',
+        payload: err.response.data.error
+      });
+    }
+  }
+
+  async function addDevice(userId, device) {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        ...authHeader(),
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post(`/api/v1/users/${userId}/devices`, device, requestOptions);
+
+      dispatch({
+        type: 'ADD_DEVICE',
+        payload: res.data.data
+      });
+    } catch (err) {
+      dispatch({
+        type: 'DEVICE_ERROR',
+        payload: err.response.data.error
+      });
+    }
+  }
+
+  async function deleteDevice(userId, deviceId) {
+    const requestOptions = {
+      method: 'GET',
+      headers: authHeader()
+    };
+
+    try {
+      await axios.delete(`/api/v1/users/${userId}/devices/${deviceId}`, requestOptions);
+
+      dispatch({
+        type: 'DELETE_DEVICE',
+        payload: deviceId
+      });
+    } catch (err) {
+      dispatch({
+        type: 'DEVICE_ERROR',
+        payload: err.response.data.error
+      });
+    }
+  }
+
   return (<GlobalContext.Provider value={{
+    devices: state.devices,
     transactions: state.transactions,
     error: state.error,
     loading: state.loading,
     getTransactions,
     deleteTransaction,
-    addTransaction
+    addTransaction,
+    getDevices,
+    addDevice,
+    deleteDevice,
   }}>
     {children}
   </GlobalContext.Provider>);

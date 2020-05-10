@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Header } from './Header';
 import { Balance } from './Balance';
 import { IncomeExpenses } from './IncomeExpenses';
@@ -17,6 +18,8 @@ export const HomePage = () => (
                 <IncomeExpenses />
                 <TransactionList />
                 <AddTransaction />
+                <Link to="/devices" className="btn btn-link">Devices</Link>
+                <Link to="/login" className="btn btn-link">Logout</Link>
             </div>
     </GlobalProvider>
 )
