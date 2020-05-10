@@ -1,37 +1,37 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: expense-tracker-server
+  name: expense-tracker
   labels:
-    app: expense-tracker-server
+    app: expense-tracker
 spec:
   type: NodePort
   ports:
-    - port: 5000
-      targetPort: 5000
-      nodePort: 30005
-      name: expense-tracker-server
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30001
+      name: expense-tracker
   selector:
-    app: expense-tracker-server
+    app: expense-tracker
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: expense-tracker-server
+  name: expense-tracker
   labels:
-    app: expense-tracker-server
+    app: expense-tracker
 spec:
   selector:
     matchLabels:
-      app: expense-tracker-server
+      app: expense-tracker
   template:
     metadata:
       labels:
-        app: expense-tracker-server
+        app: expense-tracker
     spec:
       containers:
-      - name: expense-tracker-server
-        image: us.icr.io/nyu-cc/expense-tracker-server:latest
+      - name: expense-tracker
+        image: us.icr.io/nyu-cc/expense-tracker:latest
         ports:
-        - containerPort: 5000
-          name: expense-tracker-server
+        - containerPort: 3000
+          name: expense-tracker
