@@ -9,7 +9,7 @@ export const MessageInput = () => {
 
     const onMessageSend = ev => {
         if (ev.keyCode === 13) {
-            if (bugout.lastwirecount) {
+            if (message !== '' && bugout.lastwirecount) {
                 bugout.send(JSON.stringify({ content: message, sender:  user.username, receiver: selectedFriend.username}));
                 setMessage('');
             }
