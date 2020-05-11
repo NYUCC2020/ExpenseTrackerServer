@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { DeviceList } from './Devices/DeviceList';
 import { AddDevice } from './Devices/AddDevice';
 
