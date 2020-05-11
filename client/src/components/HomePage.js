@@ -34,20 +34,20 @@ export const HomePage = () => {
     }, []);
 
     return (<GlobalProvider>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <Link className="navbar-brand" to="/">Expense Tracker</Link>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
+            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div className="navbar-nav">
                     <Link className="nav-item nav-link active" to="/">Transactions</Link>
                     <Link className="nav-item nav-link" to="/transfer">Transfer</Link>
                     <Link className="nav-item nav-link" to="/devices">Devices</Link>
                     <Link className="nav-item nav-link" to="/chat">Chat</Link>
                 </div>
             </div>
-            <a class="btn btn-primary" href="/login" role="button">Logout</a>
+            <a className="btn btn-primary" href="/login" role="button">Logout</a>
         </nav>
         <div className="container">
             <Balance />
