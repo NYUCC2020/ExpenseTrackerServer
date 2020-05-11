@@ -3,7 +3,7 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { history } from './context/_helpers';
 import { alertActions } from './context/_actions';
-import { DevicePage, HomePage, PrivateRoute, LoginPage, RegisterPage } from './components'
+import { DevicePage, HomePage, PrivateRoute, LoginPage, RegisterPage, TransferPage } from './components'
 
 function App() {
     const alert = useSelector(state => state.alert);
@@ -28,6 +28,7 @@ function App() {
                         <Route path="/login" component={LoginPage} />
                         <Route path="/register" component={RegisterPage} />
                         <Route path="/devices" component={DevicePage} />
+                        <Route path="/transfer" component={TransferPage} />
                         <Redirect from="*" to="/" />
                     </Switch>
                 </Router>
