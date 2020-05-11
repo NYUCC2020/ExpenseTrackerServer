@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Balance } from './Balance';
 import { IncomeExpenses } from './IncomeExpenses';
 import { TransactionList } from './TransactionList';
