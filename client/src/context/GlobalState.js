@@ -7,6 +7,7 @@ import { authHeader } from './_helpers';
 const initialState = {
   transactions: [],
   devices: [],
+  friends: [],
   error: null,
   loading: true
 }
@@ -151,7 +152,30 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  async function getFriends(userId) {
+    const requestOptions = {
+      method: 'GET',
+      headers: authHeader()
+    };
+
+    try {
+      const res = await axios.get(`/api/v1/users`, requestOptions);
+
+      dispatch({
+        type: 'GET_FRIENDS',
+        payload: res.data
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: 'FRIEND_ERROR',
+        payload: err.response.data.error
+      });
+    }
+  }
+
   return (<GlobalContext.Provider value={{
+    friends: state.friends,
     devices: state.devices,
     transactions: state.transactions,
     error: state.error,
@@ -162,6 +186,7 @@ export const GlobalProvider = ({ children }) => {
     getDevices,
     addDevice,
     deleteDevice,
+    getFriends,
   }}>
     {children}
   </GlobalContext.Provider>);

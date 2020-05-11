@@ -10,3 +10,4 @@ export * from './RegisterPage';
 export * from './HomePage';
 export * from './DevicePage';
 export * from './TransferPage';
+export * from './ChatPage';

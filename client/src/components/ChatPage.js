@@ -1,11 +1,10 @@
 import React from 'react';
-
 import { GlobalProvider } from '../context/GlobalState';
+import { FriendList } from './Chat/FriendList';
+import { ChatWindow } from './Chat/ChatWindow';
 import { Link } from 'react-router-dom';
 
-import '../App.css';
-
-export const TransferPage = () => (
+export const ChatPage = () => (
     <GlobalProvider>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <Link className="navbar-brand" to="/">Expense Tracker</Link>
@@ -15,12 +14,23 @@ export const TransferPage = () => (
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <Link className="nav-item nav-link" to="/">Transactions</Link>
-                    <Link className="nav-item nav-link active" to="/transfer">Transfer</Link>
+                    <Link className="nav-item nav-link" to="/transfer">Transfer</Link>
                     <Link className="nav-item nav-link" to="/devices">Devices</Link>
-                    <Link className="nav-item nav-link" to="/chat">Chat</Link>
+                    <Link className="nav-item nav-link active" to="/chat">Chat</Link>
                 </div>
             </div>
             <a class="btn btn-primary" href="/login" role="button">Logout</a>
         </nav>
+        <div className="container">
+            <h3>Chat</h3>
+            <div className="row">
+                <div className="col-2">
+                    <FriendList />
+                </div>
+                <div className="col-10">
+                    <ChatWindow />
+                </div>
+            </div>
+        </div>
     </GlobalProvider>
-)
+);
