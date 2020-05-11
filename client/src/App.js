@@ -3,7 +3,7 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { history } from './context/_helpers';
 import { alertActions } from './context/_actions';
-import { DevicePage, HomePage, PrivateRoute, LoginPage, RegisterPage, TransferPage } from './components'
+import { ChatPage, DevicePage, HomePage, PrivateRoute, LoginPage, RegisterPage, TransferPage } from './components'
 
 function App() {
     const alert = useSelector(state => state.alert);
@@ -18,7 +18,7 @@ function App() {
 
     return (
         <div className="container">
-            <div className="col-md-8 offset-md-2">
+            <div className="col-md-10 offset-md-1">
                 {alert.message &&
                     <div className={`alert ${alert.type}`}>{alert.message}</div>
                 }
@@ -29,6 +29,7 @@ function App() {
                         <Route path="/register" component={RegisterPage} />
                         <Route path="/devices" component={DevicePage} />
                         <Route path="/transfer" component={TransferPage} />
+                        <Route path="/chat" component={ChatPage} />
                         <Redirect from="*" to="/" />
                     </Switch>
                 </Router>

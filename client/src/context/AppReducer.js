@@ -42,6 +42,17 @@ export default (state, action) => {
         ...state,
         error: action.payload
       }
+    case 'GET_FRIENDS':
+      return {
+        ...state,
+        loading: false,
+        friends: action.payload
+      }
+    case 'FRIEND_ERROR':
+      return {
+        ...state,
+        error: action.payload
+      }
     default:
       return state;
   }
