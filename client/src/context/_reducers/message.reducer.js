@@ -5,6 +5,7 @@ const initialState = {
     bugout: undefined,
     hasOnMessageHandler: false,
     selectedFriend: undefined,
+    onlineFriends: [],
 }
 
 export function message(state = initialState, action) {
@@ -13,6 +14,21 @@ export function message(state = initialState, action) {
             return {
                 ...state,
                 messages: state.messages.concat(action.message),
+            };
+        case messageConstants.PEER_JOIN:
+        case messageConstants.PEER_JOIN_ACK:
+            if (state.onlineFriends.includes(action.message.sender)) {
+                return state;
+            } else {
+                return {
+                    ...state,
+                    onlineFriends: state.onlineFriends.concat(action.message.sender),
+                };
+            }
+        case messageConstants.PEER_LEAVE:
+            return {
+                ...state,
+                onlineFriends: state.onlineFriends.filter(friend => friend !== action.message.sender),
             };
         case messageConstants.CREATE_BUGOUT:
             const bugout = window.Bugout("expense-tracker", { timeout: 60 * 60 * 1000 });

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Web3 from 'web3'
 import { userActions } from '../context/_actions';
 import { GlobalProvider } from '../context/GlobalState';
+import { broadcastLeave } from '../utils/messageUtils'
 import ExpenseTracker from '../abis/ExpenseTracker.json'
 
 import '../App.css';
@@ -17,6 +18,7 @@ function TransferPage() {
     const { recipientUsername, amount } = inputs;
     const users = useSelector(state => state.users);
     const user = useSelector(state => state.authentication.user);
+    const bugout = useSelector(state => state.message.bugout);
     var windowWeb3 = {};
     var expenseTracker = {};
     const dispatch = useDispatch();
@@ -86,7 +88,7 @@ function TransferPage() {
                         <a className="nav-item nav-link" href="/devices">Devices</a>
                     </div>
                 </div>
-                <a className="btn btn-primary" href="/login" role="button">Logout</a>
+                <a className="btn btn-primary" href="/login" role="button" onClick={() => broadcastLeave(bugout, user)}>Logout</a>
             </nav>
             <div className="col-lg-8 offset-lg-2">
                 <form name="form" onSubmit={handleSubmit}>
