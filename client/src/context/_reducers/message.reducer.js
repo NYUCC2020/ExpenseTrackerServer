@@ -15,11 +15,15 @@ export function message(state = initialState, action) {
                 ...state,
                 messages: state.messages.concat(action.message),
             };
-        case messageConstants.JOIN:
-            const msg = action.message;
+        case messageConstants.PEER_JOIN:
             return {
                 ...state,
-                onlineFriends: state.onlineFriends.concat(msg.sender),
+                onlineFriends: state.onlineFriends.concat(action.message.sender),
+            };
+        case messageConstants.PEER_LEAVE:
+            return {
+                ...state,
+                onlineFriends: state.onlineFriends.filter(friend => friend !== action.message.sender),
             };
         case messageConstants.CREATE_BUGOUT:
             const bugout = window.Bugout("expense-tracker", { timeout: 60 * 60 * 1000 });

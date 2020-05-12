@@ -4,11 +4,12 @@ export function createMessage(type, sender, receiver, content) {
     let message = {};
     switch (type) {
         case messageConstants.MESSAGE_TYPE.JOIN:
+        case messageConstants.MESSAGE_TYPE.LEAVE:
             message = {
                 type,
-                content: "JOIN",
+                content: type,
                 sender,
-                receiver: "ALL",
+                receiver: messageConstants.BROADCAST_RECEIVER,
                 timestamp: Date.now() / 1000,
             };
             break;
@@ -30,5 +31,12 @@ export function onConnect(bugout, callback) {
         callback();
     } else {
         setTimeout(() => onConnect(bugout, callback), 500)
+    }
+}
+
+export function broadcastLeave(bugout, user) {
+    if (user && bugout) {
+        const joinMsg = createMessage(messageConstants.MESSAGE_TYPE.LEAVE, user.username);
+        bugout.send(joinMsg);
     }
 }

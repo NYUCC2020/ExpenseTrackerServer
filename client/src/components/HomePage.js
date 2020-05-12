@@ -8,7 +8,7 @@ import { AddTransaction } from './AddTransaction';
 
 import { GlobalProvider } from '../context/GlobalState';
 import { messageConstants } from '../context/_constants';
-import { createMessage, onConnect } from '../utils/messageUtils'
+import { createMessage, onConnect, broadcastLeave } from '../utils/messageUtils'
 
 import '../App.css';
 import { Link } from 'react-router-dom';
@@ -22,13 +22,16 @@ export const HomePage = () => {
     if (bugout && !hasOnMessageHandler) {
         bugout.on("message", function (address, message) {
             const msgJson = JSON.parse(message);
-            if (msgJson.receiver == "ALL" || msgJson.receiver === user.username || msgJson.sender === user.username) {
+            if (msgJson.receiver == messageConstants.BROADCAST_RECEIVER || msgJson.receiver === user.username || msgJson.sender === user.username) {
                 switch (msgJson.type) {
                     case messageConstants.MESSAGE_TYPE.TEXT:
                         dispatch({ type: messageConstants.RECEIVE, message: msgJson });
                         break;
                     case messageConstants.MESSAGE_TYPE.JOIN:
-                        dispatch({ type: messageConstants.JOIN, message: msgJson });
+                        dispatch({ type: messageConstants.PEER_JOIN, message: msgJson });
+                        break;
+                    case messageConstants.MESSAGE_TYPE.LEAVE:
+                        dispatch({ type: messageConstants.PEER_LEAVE, message: msgJson });
                         break;
                     default:
                         console.log(`Unknown message: ${message}`)
@@ -62,7 +65,7 @@ export const HomePage = () => {
                     <Link className="nav-item nav-link" to="/chat">Chat</Link>
                 </div>
             </div>
-            <a className="btn btn-primary" href="/login" role="button">Logout</a>
+            <a className="btn btn-primary" href="/login" role="button" onClick={() => broadcastLeave(bugout, user)}>Logout</a>
         </nav>
         <div className="container">
             <Balance />
