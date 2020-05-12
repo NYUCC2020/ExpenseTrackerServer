@@ -7,9 +7,17 @@
  account: chen873374255@gmail.com
  password: NYUcc2020
 
+ Download Ganache client (https://www.trufflesuite.com/ganache)
+ Run Ganache and create a quickstart workspace
+
  npm install
+
  cd client
  npm install
+ truffle compile
+ truffle migrate
+ mv build/contracts/* src/abis/
+
  cd ..
  
  # Run front and backend
@@ -20,6 +28,8 @@
  
  # Frontend only
  npm run client (run on http://localhost:3000)
+
+ Transfer money only works inside the network. So change the MetaMask network to the one Ganache is using and then import accounts using the private keys listed by Ganache. After that, register new accounts using the new wallet address, then you can transfer ether to others in the same network.
 ```
 
 ### Run with Docker
