@@ -54,7 +54,7 @@ export const HomePage = () => {
         if (!bugout) {
             dispatch({ type: messageConstants.CREATE_BUGOUT });
         }
-    }, []);
+    }, [dispatch, bugout]);
 
     return (<GlobalProvider>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">

@@ -7,6 +7,7 @@ export const userService = {
     register,
     getAll,
     getById,
+    getByName,
     update,
     delete: _delete
 };
@@ -49,6 +50,22 @@ function getById(id) {
     };
 
     return fetch(`/api/v1/users/${id}`, requestOptions).then(handleResponse);
+}
+
+function getByName(username) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+    };
+
+    return fetch(`/api/v1/users/username`, requestOptions)
+        .then(handleResponse)
+        .then(user => {
+            localStorage.setItem('recipient', JSON.stringify(user));
+
+            return user;
+        });
 }
 
 function register(user) {
