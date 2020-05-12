@@ -84,6 +84,7 @@ function TransferPage() {
                         <a className="nav-item nav-link" href="/">Transactions <span className="sr-only">(current)</span></a>
                         <a className="nav-item nav-link active" href="/transfer">Transfer</a>
                         <a className="nav-item nav-link" href="/devices">Devices</a>
+                        <a className="nav-item nav-link" href="/addfriend">Add Friend</a>
                     </div>
                 </div>
                 <a className="btn btn-primary" href="/login" role="button">Logout</a>

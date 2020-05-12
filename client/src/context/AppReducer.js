@@ -53,6 +53,11 @@ export default (state, action) => {
         ...state,
         error: action.payload
       }
+    case 'ADD_FRIEND':
+      return{
+        ...state,
+        friends: [...state.friends, action.payload]
+      }
     default:
       return state;
   }

@@ -174,6 +174,31 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  async function addFriend(userId, friend) {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        ...authHeader(),
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post(`/api/v1/users${userId}/friends`, friend, requestOptions);
+
+      dispatch({
+        type: 'ADD_FRIEND',
+        payload: res.data.data
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: 'FRIEND_ERROR',
+        payload: err.response.data.error
+      });
+    }
+  }
+
   return (<GlobalContext.Provider value={{
     friends: state.friends,
     devices: state.devices,
@@ -187,6 +212,7 @@ export const GlobalProvider = ({ children }) => {
     addDevice,
     deleteDevice,
     getFriends,
+    addFriend
   }}>
     {children}
   </GlobalContext.Provider>);

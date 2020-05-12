@@ -11,3 +11,4 @@ export * from './HomePage';
 export * from './DevicePage';
 export * from './TransferPage';
 export * from './ChatPage';
+export * from './AddFriendPage';

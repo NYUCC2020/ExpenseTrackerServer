@@ -45,6 +45,7 @@ export const HomePage = () => {
                     <Link className="nav-item nav-link" to="/transfer">Transfer</Link>
                     <Link className="nav-item nav-link" to="/devices">Devices</Link>
                     <Link className="nav-item nav-link" to="/chat">Chat</Link>
+                    <Link className="nav-item nav-link" to="/addfriend">Add Friend</Link>
                 </div>
             </div>
             <a className="btn btn-primary" href="/login" role="button">Logout</a>
