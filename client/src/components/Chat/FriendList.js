@@ -7,6 +7,7 @@ import { messageConstants } from '../../context/_constants';
 export const FriendList = () => {
   const { friends, getFriends } = useContext(GlobalContext);
   const selectedFriend = useSelector(state => state.message.selectedFriend);
+  const unreadCounter = useSelector(state => state.message.unreadCounter);
   const user = useSelector(state => state.authentication.user);
   const onlineFriends = useSelector(state => state.message.onlineFriends);
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export const FriendList = () => {
     <>
       <ul className="list">
         {dispalyFriends.map((friend, index) => (
-          <li 
+          <li
             key={index}
             className={[
               selectedFriend && friend.id === selectedFriend.id ? 'selected' : '',
@@ -30,6 +31,10 @@ export const FriendList = () => {
             ].join(" ")}
             onClick={() => dispatch({ type: messageConstants.SELECT_FRIEND, friend: friend })}>
             {friend.username}
+            {(!selectedFriend || (selectedFriend && selectedFriend.id !== friend.id))
+              && unreadCounter[friend.username] ?
+              <span className="badge badge-pill badge-danger">{unreadCounter[friend.username]}</span>
+              : ''}
           </li>
         ))}
       </ul>

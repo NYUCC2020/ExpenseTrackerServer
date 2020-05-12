@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Web3 from 'web3'
+import { Link } from 'react-router-dom';
 import { userActions } from '../context/_actions';
 import { GlobalProvider } from '../context/GlobalState';
 import { broadcastLeave } from '../utils/messageUtils'
@@ -77,15 +78,16 @@ function TransferPage() {
     return (
         <GlobalProvider>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <a className="navbar-brand" href="/">Expense Tracker</a>
+                <Link className="navbar-brand" to="/">Expense Tracker</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <a className="nav-item nav-link" href="/">Transactions <span className="sr-only">(current)</span></a>
-                        <a className="nav-item nav-link active" href="/transfer">Transfer</a>
-                        <a className="nav-item nav-link" href="/devices">Devices</a>
+                        <Link className="nav-item nav-link" to="/">Transactions</Link>
+                        <Link className="nav-item nav-link active" to="/transfer">Transfer</Link>
+                        <Link className="nav-item nav-link" to="/devices">Devices</Link>
+                        <Link className="nav-item nav-link" to="/chat">Chat</Link>
                     </div>
                 </div>
                 <a className="btn btn-primary" href="/login" role="button" onClick={() => broadcastLeave(bugout, user)}>Logout</a>

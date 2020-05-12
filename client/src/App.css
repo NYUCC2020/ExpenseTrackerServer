@@ -104,6 +104,7 @@ input[type='number'] {
   padding: 10px;
   margin: 10px 0;
   word-break: break-all;
+  align-items: center;
 }
 
 .list li.plus {
