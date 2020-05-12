@@ -2,6 +2,7 @@ import { messageConstants } from '../_constants';
 
 const initialState = {
     messages: [],
+    unreadCounter: {},
     bugout: undefined,
     hasOnMessageHandler: false,
     selectedFriend: undefined,
@@ -11,9 +12,15 @@ const initialState = {
 export function message(state = initialState, action) {
     switch (action.type) {
         case messageConstants.RECEIVE:
+            const counter = state.unreadCounter;
+            const sender = action.message.sender
+            if (!state.selectedFriend || state.selectedFriend.username !== sender) {
+                counter[sender] = counter[sender] ? counter[sender] + 1 : 1;
+            }
             return {
                 ...state,
                 messages: state.messages.concat(action.message),
+                unreadCounter: { ...counter },
             };
         case messageConstants.PEER_JOIN:
         case messageConstants.PEER_JOIN_ACK:
@@ -42,9 +49,11 @@ export function message(state = initialState, action) {
                 hasOnMessageHandler: true,
             };
         case messageConstants.SELECT_FRIEND:
+            state.unreadCounter[action.friend.username] = 0;
             return {
                 ...state,
                 selectedFriend: action.friend,
+                unreadCounter: { ...state.unreadCounter },
             };
         default:
             return state

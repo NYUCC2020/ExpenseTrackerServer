@@ -29,10 +29,10 @@ export const ChatPage = () => {
         <div className="container">
             <h3>Chat</h3>
             <div className="row">
-                <div className="col-2">
+                <div className="col-3">
                     <FriendList />
                 </div>
-                <div className="col-10">
+                <div className="col-9">
                     <ChatWindow />
                 </div>
             </div>
