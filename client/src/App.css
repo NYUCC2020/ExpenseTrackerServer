@@ -114,6 +114,10 @@ input[type='number'] {
   border-right: 5px solid #c0392b;
 }
 
+.list li.selected {
+  background-color: #b6b6b6;
+}
+
 .delete-btn {
   cursor: pointer;
   background-color: #e74c3c;

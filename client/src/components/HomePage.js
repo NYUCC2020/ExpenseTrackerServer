@@ -8,6 +8,7 @@ import { AddTransaction } from './AddTransaction';
 
 import { GlobalProvider } from '../context/GlobalState';
 import { messageConstants } from '../context/_constants';
+import { createMessage, onConnect } from '../utils/messageUtils'
 
 import '../App.css';
 import { Link } from 'react-router-dom';
@@ -21,10 +22,24 @@ export const HomePage = () => {
     if (bugout && !hasOnMessageHandler) {
         bugout.on("message", function (address, message) {
             const msgJson = JSON.parse(message);
-            if (msgJson.receiver === user.username || msgJson.sender === user.username) {
-                dispatch({ type: messageConstants.RECEIVE, message: msgJson });
+            if (msgJson.receiver == "ALL" || msgJson.receiver === user.username || msgJson.sender === user.username) {
+                switch (msgJson.type) {
+                    case messageConstants.MESSAGE_TYPE.TEXT:
+                        dispatch({ type: messageConstants.RECEIVE, message: msgJson });
+                        break;
+                    case messageConstants.MESSAGE_TYPE.JOIN:
+                        dispatch({ type: messageConstants.JOIN, message: msgJson });
+                        break;
+                    default:
+                        console.log(`Unknown message: ${message}`)
+                }
             }
         });
+        dispatch({ type: messageConstants.SET_BUGOUT_ON_MESSAGE_STATUS });
+        onConnect(bugout, () => {
+            const joinMsg = createMessage(messageConstants.MESSAGE_TYPE.JOIN, user.username);
+            bugout.send(joinMsg);
+        })
     }
 
     useEffect(() => {

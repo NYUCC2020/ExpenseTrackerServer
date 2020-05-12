@@ -5,6 +5,7 @@ const initialState = {
     bugout: undefined,
     hasOnMessageHandler: false,
     selectedFriend: undefined,
+    onlineFriends: [],
 }
 
 export function message(state = initialState, action) {
@@ -13,6 +14,12 @@ export function message(state = initialState, action) {
             return {
                 ...state,
                 messages: state.messages.concat(action.message),
+            };
+        case messageConstants.JOIN:
+            const msg = action.message;
+            return {
+                ...state,
+                onlineFriends: state.onlineFriends.concat(msg.sender),
             };
         case messageConstants.CREATE_BUGOUT:
             const bugout = window.Bugout("expense-tracker", { timeout: 60 * 60 * 1000 });
