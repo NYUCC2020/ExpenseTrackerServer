@@ -1,7 +1,7 @@
 import React from 'react';
 import { DeviceList } from './Devices/DeviceList';
 import { AddDevice } from './Devices/AddDevice';
-
+import { Link } from 'react-router-dom';
 import { GlobalProvider } from '../context/GlobalState';
 
 import '../App.css';
