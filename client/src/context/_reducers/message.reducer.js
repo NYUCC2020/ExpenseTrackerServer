@@ -16,10 +16,15 @@ export function message(state = initialState, action) {
                 messages: state.messages.concat(action.message),
             };
         case messageConstants.PEER_JOIN:
-            return {
-                ...state,
-                onlineFriends: state.onlineFriends.concat(action.message.sender),
-            };
+        case messageConstants.PEER_JOIN_ACK:
+            if (state.onlineFriends.includes(action.message.sender)) {
+                return state;
+            } else {
+                return {
+                    ...state,
+                    onlineFriends: state.onlineFriends.concat(action.message.sender),
+                };
+            }
         case messageConstants.PEER_LEAVE:
             return {
                 ...state,

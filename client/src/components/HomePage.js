@@ -29,6 +29,11 @@ export const HomePage = () => {
                         break;
                     case messageConstants.MESSAGE_TYPE.JOIN:
                         dispatch({ type: messageConstants.PEER_JOIN, message: msgJson });
+                        const joinAckMsg = createMessage(messageConstants.MESSAGE_TYPE.JOIN_ACK, user.username);
+                        bugout.send(joinAckMsg);
+                        break;
+                    case messageConstants.MESSAGE_TYPE.JOIN_ACK:
+                        dispatch({ type: messageConstants.PEER_JOIN_ACK, message: msgJson });
                         break;
                     case messageConstants.MESSAGE_TYPE.LEAVE:
                         dispatch({ type: messageConstants.PEER_LEAVE, message: msgJson });

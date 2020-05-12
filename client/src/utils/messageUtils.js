@@ -4,6 +4,7 @@ export function createMessage(type, sender, receiver, content) {
     let message = {};
     switch (type) {
         case messageConstants.MESSAGE_TYPE.JOIN:
+        case messageConstants.MESSAGE_TYPE.JOIN_ACK:
         case messageConstants.MESSAGE_TYPE.LEAVE:
             message = {
                 type,
