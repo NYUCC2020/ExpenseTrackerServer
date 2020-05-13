@@ -14,6 +14,7 @@ connectDB();
 
 const devices = require('./routes/devices');
 const transactions = require('./routes/transactions');
+const friends=require('./routes/friends');
 const users = require('./users/user.controller');
 
 const app = express();
@@ -30,6 +31,7 @@ if(process.env.NODE_ENV === 'development') {
 app.use('/api/v1/users/:userId/devices', devices);
 app.use('/api/v1/users/:userId/transactions', transactions);
 app.use('/api/v1/users', users);
+app.use('/api/v1/users/:userId/friends', friends);
 
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

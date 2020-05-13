@@ -159,11 +159,11 @@ export const GlobalProvider = ({ children }) => {
     };
 
     try {
-      const res = await axios.get(`/api/v1/users`, requestOptions);
+      const res = await axios.get(`/api/v1/users/${userId}/friends`, requestOptions);
 
       dispatch({
         type: 'GET_FRIENDS',
-        payload: res.data
+        payload: res.data.data
       });
     } catch (err) {
       console.log(err);
@@ -174,7 +174,7 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  async function addFriend(userId, friend) {
+  async function addFriend(userId, friendname) {
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -184,7 +184,7 @@ export const GlobalProvider = ({ children }) => {
     };
 
     try {
-      const res = await axios.post(`/api/v1/users${userId}/friends`, friend, requestOptions);
+      const res = await axios.post(`/api/v1/users/${userId}/friends`, friendname, requestOptions);
 
       dispatch({
         type: 'ADD_FRIEND',

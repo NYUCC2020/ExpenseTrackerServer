@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Web3 from 'web3'
+import Web3 from 'web3';
+import { Link } from 'react-router-dom';
 import { userActions } from '../context/_actions';
 import { GlobalProvider } from '../context/GlobalState';
 import ExpenseTracker from '../abis/ExpenseTracker.json'
@@ -81,10 +82,11 @@ function TransferPage() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <a className="nav-item nav-link" href="/">Transactions <span className="sr-only">(current)</span></a>
-                        <a className="nav-item nav-link active" href="/transfer">Transfer</a>
-                        <a className="nav-item nav-link" href="/devices">Devices</a>
-                        <a className="nav-item nav-link" href="/addfriend">Add Friend</a>
+                        <Link className="nav-item nav-link" to="/">Transactions</Link>
+                        <Link className="nav-item nav-link" to="/transfer">Transfer</Link>
+                        <Link className="nav-item nav-link active" to="/devices">Devices</Link>
+                        <Link className="nav-item nav-link" to="/chat">Chat</Link>
+                        <Link className="nav-item nav-link" to="/friends">Friends</Link>
                     </div>
                 </div>
                 <a className="btn btn-primary" href="/login" role="button">Logout</a>
