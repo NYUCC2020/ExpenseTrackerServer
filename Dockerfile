@@ -3,9 +3,7 @@ FROM node:alpine3.11
 # set working directory
 WORKDIR /app
 
-# in case you want to get in the container using bash for debugging
-# uncomment the following line, and rebuid the image to install bash
-# RUN apk update && apk add bash
+RUN apk update && apk add bash
 
 # install server dependencies
 COPY package.json ./
@@ -38,4 +36,4 @@ EXPOSE 3000
 EXPOSE 5000
 
 # run speech-to-text server, expense-tracker server & client
-CMD ["/app/run.sh"]
+ENTRYPOINT ["/app/run.sh"]
