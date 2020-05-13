@@ -1,60 +1,19 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Balance } from './Balance';
 import { IncomeExpenses } from './IncomeExpenses';
 import { TransactionList } from './TransactionList';
 import { AddTransaction } from './AddTransaction';
 
 import { GlobalProvider } from '../context/GlobalState';
-import { messageConstants } from '../context/_constants';
-import { createMessage, onConnect, broadcastLeave } from '../utils/messageUtils'
+import { broadcastLeave } from '../utils/messageUtils'
 
 import '../App.css';
 import { Link } from 'react-router-dom';
 
 export const HomePage = () => {
-    const dispatch = useDispatch();
     const bugout = useSelector(state => state.message.bugout);
     const user = useSelector(state => state.authentication.user);
-    const hasOnMessageHandler = useSelector(state => state.message.hasOnMessageHandler);
-
-    if (bugout && !hasOnMessageHandler) {
-        bugout.on("message", function (address, message) {
-            const msgJson = JSON.parse(message);
-            if (msgJson.receiver == messageConstants.BROADCAST_RECEIVER || msgJson.receiver === user.username || msgJson.sender === user.username) {
-                switch (msgJson.type) {
-                    case messageConstants.MESSAGE_TYPE.TEXT:
-                        dispatch({ type: messageConstants.RECEIVE, message: msgJson });
-                        break;
-                    case messageConstants.MESSAGE_TYPE.JOIN:
-                        dispatch({ type: messageConstants.PEER_JOIN, message: msgJson });
-                        const joinAckMsg = createMessage(messageConstants.MESSAGE_TYPE.JOIN_ACK, user.username);
-                        bugout.send(joinAckMsg);
-                        break;
-                    case messageConstants.MESSAGE_TYPE.JOIN_ACK:
-                        dispatch({ type: messageConstants.PEER_JOIN_ACK, message: msgJson });
-                        break;
-                    case messageConstants.MESSAGE_TYPE.LEAVE:
-                        dispatch({ type: messageConstants.PEER_LEAVE, message: msgJson });
-                        break;
-                    default:
-                        console.log(`Unknown message: ${message}`)
-                }
-            }
-        });
-        dispatch({ type: messageConstants.SET_BUGOUT_ON_MESSAGE_STATUS });
-        onConnect(bugout, () => {
-            const joinMsg = createMessage(messageConstants.MESSAGE_TYPE.JOIN, user.username);
-            bugout.send(joinMsg);
-        })
-    }
-
-    useEffect(() => {
-        if (!bugout) {
-            dispatch({ type: messageConstants.CREATE_BUGOUT });
-        }
-    }, [dispatch, bugout]);
 
     return (<GlobalProvider>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
