@@ -27,11 +27,15 @@ ENV PATH /app/client/node_modules/.bin:$PATH
 # add code
 WORKDIR /app
 COPY . ./
+RUN ["chmod", "+x", "run.sh"]
+
+# speech-to-text
+ENV GOOGLE_APPLICATION_CREDENTIALS "/app/project2-276903-9e1a3036d74e.json"
 
 # client runs on port 3000
 EXPOSE 3000
 # server runs on port 5000
 EXPOSE 5000
 
-# start client app
-CMD ["npm", "run", "dev"]
+# run speech-to-text server, expense-tracker server & client
+CMD ["/app/run.sh"]
