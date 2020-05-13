@@ -1,4 +1,6 @@
 const Transaction = require('../models/Transaction');
+const speech = require('@google-cloud/speech');
+const client = new speech.SpeechClient();
 
 // @desc    Get all transactions
 // @route   GET /api/v1/users/:userId/transactions
@@ -76,5 +78,19 @@ exports.deleteTransaction = async (req, res, next) => {
       success: false,
       error: 'Server Error'
     });
+  }
+}
+
+
+exports.checkSpeechText = async (req, res, next) => {
+  console.log(req.body)
+  try {
+  
+    return res.status(201).json({
+      success: true,
+      data: transcription
+    }); 
+  } catch (err) {
+    console.log(err)
   }
 }

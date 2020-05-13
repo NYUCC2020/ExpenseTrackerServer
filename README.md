@@ -30,6 +30,15 @@
  npm run client (run on http://localhost:3000)
 
  Transfer money only works inside the network. So change the MetaMask network to the one Ganache is using and then import accounts using the private keys listed by Ganache. After that, register new accounts using the new wallet address, then you can transfer ether to others in the same network.
+
+ # Google Speech to Text API Useage
+ npm install --save @google-cloud/speech
+ npm install --save js-audio-recorder
+ npm run dev
+
+ open up another terminal run
+ export GOOGLE_APPLICATION_CREDENTIALS="PATH/project2-276903-9e1a3036d74e.json"
+ node post.json
 ```
 
 ### Run with Docker
