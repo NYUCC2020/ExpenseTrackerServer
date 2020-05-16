@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ganache
+  labels:
+    app: ganache
+spec:
+  type: NodePort
+  ports:
+    - port: 8545
+      targetPort: 8545
+      nodePort: 30045
+      name: ganache
+  selector:
+    app: ganache
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ganache
+  labels:
+    app: ganache
+spec:
+  selector:
+    matchLabels:
+      app: ganache
+  template:
+    metadata:
+      labels:
+        app: ganache
+    spec:
+      containers:
+      - name: ganache
+        image: trufflesuite/ganache-cli:latest
+        ports:
+        - containerPort: 8545
+          name: ganache
